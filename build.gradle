@@ -1,7 +1,9 @@
 plugins {
+	id "com.jfrog.bintray" version "1.8.3"
 	id 'org.jetbrains.kotlin.jvm' version '1.2.50'
 	id 'com.github.johnrengelman.plugin-shadow' version '2.0.3'
 	id 'com.palantir.git-version' version '0.11.0'
+	id 'maven-publish'
 }
 
 dependencies {
@@ -15,9 +17,9 @@ repositories {
 }
 
 group 'com.github.icarohs7'
+version gitVersion().toString().find('(\\d\\.\\d\\.\\d)')
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-version gitVersion().toString().replaceAll('\\.dirty', '')
 
 compileKotlin {
 	kotlinOptions.jvmTarget = '1.8'
@@ -38,5 +40,56 @@ test {
 kotlin {
 	experimental {
 		coroutines "enable"
+	}
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion '4.8.1'
+}
+
+bintray {
+	user = System.getenv('BINTRAY_USER')
+	key = System.getenv('BINTRAY_KEY')
+	publications = ['mavenJava']
+	
+	pkg {
+		repo = 'libraries'
+		name = 'unoxkcommons'
+		licenses = ['MIT']
+		vcsUrl = 'https://github.com/icarohs7/UNoxKCommons.git'
+		
+		version {
+			name = project.version
+			released = new Date()
+			vcsTag = project.version
+		}
+	}
+}
+
+task sourcesJar(type: Jar, dependsOn: project.classes) {
+	from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: project.javadoc) {
+	from javadoc.destinationDir
+}
+
+artifacts {
+	archives sourcesJar, javadocJar
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			artifactId project.bintray.pkg.name
+			from components.java
+			
+			artifact sourcesJar {
+				classifier = 'sources'
+			}
+			artifact javadocJar {
+				classifier = 'javadoc'
+			}
+		}
 	}
 }

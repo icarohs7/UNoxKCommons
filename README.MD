@@ -6,8 +6,8 @@ ao abstrair certas funções.
 # Sumário
 * [Aliases](#aliases)
 * [Extensões](#extensões)
-	+ [List\<T\>](#list\<t\>)
-		- [List\<List\<T\>\>](#list\<list\<t\>\>)
+	+ [List](#listas)
+		- [List`<List>`](#listas-bidimensionais)
 
 ## Aliases
 Apelidos utilizados para tipos
@@ -29,7 +29,7 @@ var m4: MatrizBooleana
 ## Extensões
 Funções adicionando funcionalidades a classes existentes
 
-### List\<T\>
+### Listas
 Funções de extensão em listas
 ```kotlin
 val lista = listOf(1,2,3)
@@ -39,7 +39,7 @@ val lista = listOf(1,2,3)
 val lTransformada = lista transformadaPor {it * it * it}    // listOf(1,8,27)
 ```
 
-#### List\<List\<T\>\>
+#### Listas Bidimensionais
 Funções de extensão em listas bidimensionais
 ```kotlin
 val lista2d = listOf(listOf(1,2,3), listOf(4,5,6), listOf(7,8,9))
