@@ -4,6 +4,9 @@ Kotlin, buscando aumentar o grau de simplicidade da linguagem
 ao abstrair certas funções.
 
 # Sumário
+* [Dependências](#dependências)
+  + [Gradle](#gradle)
+  + [Maven](#maven)
 * [Aliases](#aliases)
 * [Extensões](#extensões)
 	+ [Listas](#listas)
@@ -11,7 +14,33 @@ ao abstrair certas funções.
 	+ [Tipos Primitivos](#tipos-primitivos)
 	+ [Matrizes](#matrizes)
 	+ [Tipos Genéricos](#tipos-genéricos)
+## Dependências
 
+#### Gradle
+
+```groovy
+dependencies {
+	// ...
+	implementation 'com.github.icarohs7:unoxkcommons:<version>'
+}
+
+repositories {
+	mavenCentral()
+}
+```
+
+#### Maven
+
+```xml
+<dependencies>
+	<!-- ... -->
+	<dependency>
+		<groupId>com.github.icarohs7</groupId>
+		<artifactId>unoxkcommons</artifactId>
+		<version>version</version>
+	</dependency>
+</dependencies>
+```
 ## Aliases
 Apelidos utilizados para tipos
 
@@ -54,6 +83,9 @@ val unificada = lista2d.expandido() // listOf(1,2,3,4,5,6,7,8,9)
 /* A função transformadoRecursivamentePor aplica a lambda a cada subelemento
  * contido na lista bidimensional */
 val transformada = lista2d transformadoRecursivamentePor {it * 2}   // listOf(listOf(2,4,6), listOf(8,10,12), listOf(14,16,18))
+
+/* Executa a lambda passada em cada elemento, similar ao forEach, de forma profunda */
+lista2d.deepForEach { println(it) }
 ```
 
 ### Tipos Primitivos
@@ -83,6 +115,9 @@ val m = 1532 preenchendoMatrizIntDeTamanho (2 por 2)
 /* Aplica a lambda passada a cada subelemento da matriz,
  * Em matrizes genéricas a função correspondente chama-se transformadoRecursivamentePor */
 val m2 = m aplicandoRecursivamente {it / 2}
+
+/* Executa a lambda passada em cada elemento, similar ao forEach, de forma profunda */
+m.deepForEach { println(it) }
 ```
 
 ### Tipos Genéricos

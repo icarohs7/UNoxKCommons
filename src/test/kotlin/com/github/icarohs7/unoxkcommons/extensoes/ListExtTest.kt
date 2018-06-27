@@ -27,5 +27,14 @@ class ListExtTest : StringSpec() {
 		"Deve transformar listas unidimensionais" {
 			listOf(1, 2, 3) transformadoPor { it * it * it } shouldBe listOf(1, 8, 27)
 		}
+		
+		"Deve processar elementos de listas bidimensionais profundamente" {
+			val l = ("G-G" preenchendoListaDeTamanho (2 por 2)) transformadoRecursivamentePor { it.replace("-", "") }
+			l.deepForEachIndexed { linha, coluna, elemento -> elemento shouldBe l[linha][coluna] }
+			
+			var c = 0
+			l.deepForEach { c++ }
+			c shouldBe l.size * l[0].size
+		}
 	}
 }
