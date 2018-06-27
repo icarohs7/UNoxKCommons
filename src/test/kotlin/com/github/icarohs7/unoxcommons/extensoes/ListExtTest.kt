@@ -6,17 +6,17 @@ import io.kotlintest.specs.StringSpec
 
 class ListExtTest : StringSpec() {
 	private val casos = listOf(
-		(10 preenchendoLista2DDeTamanho (2 por 2) transformadoRecursivamentePor { it * 10 }) para
-				(100 preenchendoLista2DDeTamanho (2 por 2)),
+		(10 preenchendoListaDeTamanho (2 por 2) transformadoRecursivamentePor { it * 10 }) para
+				(100 preenchendoListaDeTamanho (2 por 2)),
 		
-		(5.0 preenchendoLista2DDeTamanho (2 por 2) transformadoRecursivamentePor { it * 10 }) para
-				(50.0 preenchendoLista2DDeTamanho (2 por 2)),
+		(5.0 preenchendoListaDeTamanho (2 por 2) transformadoRecursivamentePor { it * 10 }) para
+				(50.0 preenchendoListaDeTamanho (2 por 2)),
 		
-		(true preenchendoLista2DDeTamanho (2 por 2) transformadoRecursivamentePor { !it }) para
-				(false preenchendoLista2DDeTamanho (2 por 2)),
+		(true preenchendoListaDeTamanho (2 por 2) transformadoRecursivamentePor { !it }) para
+				(false preenchendoListaDeTamanho (2 por 2)),
 		
-		("G" preenchendoLista2DDeTamanho (2 por 2) transformadoRecursivamentePor { "${it}G" }) para
-				("GG" preenchendoLista2DDeTamanho (2 por 2))
+		("G" preenchendoListaDeTamanho (2 por 2) transformadoRecursivamentePor { "${it}G" }) para
+				("GG" preenchendoListaDeTamanho (2 por 2))
 	)
 	
 	init {

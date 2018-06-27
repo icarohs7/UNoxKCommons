@@ -20,7 +20,7 @@ inline infix fun <reified T> T.preenchendoMatrizDeTamanho(dimensao: Pair<Int, In
  * Função para criar uma lista bidimensional de forma declarativa.
  * Combinado com a função por, o resultado será: 5.0 preenchendoListaBidimensionalDeTamanho 3 por 3
  */
-inline infix fun <reified T> T.preenchendoLista2DDeTamanho(dimensao: Pair<Int, Int>) = List(dimensao.first) {
+inline infix fun <reified T> T.preenchendoListaDeTamanho(dimensao: Pair<Int, Int>) = List(dimensao.first) {
 	this preenchendoListaDeTamanho dimensao.second
 }
 

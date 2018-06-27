@@ -17,6 +17,7 @@ repositories {
 }
 
 group 'com.github.icarohs7'
+description 'Biblioteca de componentes e funções de extensão para a linguagem Kotlin'
 version gitVersion().toString().find('(\\d\\.\\d\\.\\d)')
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -47,21 +48,42 @@ task wrapper(type: Wrapper) {
 	gradleVersion '4.8.1'
 }
 
+def properties = new Properties()
+properties.load(new FileInputStream('local.properties'))
+
 bintray {
 	user = System.getenv('BINTRAY_USER')
 	key = System.getenv('BINTRAY_KEY')
 	publications = ['mavenJava']
+	publish = true
 	
 	pkg {
 		repo = 'libraries'
 		name = 'unoxkcommons'
+		desc = project.description
 		licenses = ['MIT']
+		websiteUrl = 'https://github.com/icarohs7/UNoxKCommons'
+		issueTrackerUrl = 'https://github.com/icarohs7/UNoxKCommons/issues'
 		vcsUrl = 'https://github.com/icarohs7/UNoxKCommons.git'
+		githubRepo = 'icarohs7/UNoxKCommons'
+		publicDownloadNumbers = true
 		
 		version {
 			name = project.version
 			released = new Date()
 			vcsTag = project.version
+			
+			gpg {
+				sign = true //Determines whether to GPG sign the files. The default is false
+				passphrase = properties.getProperty('GPG_PASS') //Optional. The passphrase for GPG signing'
+			}
+			mavenCentralSync {
+				sync = true //[Default: true] Determines whether to sync the version to Maven Central.
+				user = properties.getProperty('OSS_USER') //OSS user token: mandatory
+				password = properties.getProperty('OSS_PASS') //OSS user password: mandatory
+				close = '1'
+				//Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+			}
 		}
 	}
 }
@@ -78,11 +100,41 @@ artifacts {
 	archives sourcesJar, javadocJar
 }
 
+def pomConfig = {
+	licenses {
+		license {
+			name 'MIT License'
+			url 'https://opensource.org/licenses/MIT'
+		}
+	}
+	developers {
+		developer {
+			id 'icarohs7'
+			name 'Icaro R D Temponi'
+			email 'icarohs7@gmail.com'
+		}
+	}
+	
+	scm {
+		url "https://github.com/icarohs7/UNoxKCommons.git"
+	}
+}
+
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
 			artifactId project.bintray.pkg.name
+			groupId project.group
+			version project.version
 			from components.java
+			
+			pom.withXml {
+				def root = asNode()
+				root.appendNode('description', project.description)
+				root.appendNode('name', project.bintray.pkg.name)
+				root.appendNode('url', project.bintray.pkg.websiteUrl)
+				root.children().last() + pomConfig
+			}
 			
 			artifact sourcesJar {
 				classifier = 'sources'

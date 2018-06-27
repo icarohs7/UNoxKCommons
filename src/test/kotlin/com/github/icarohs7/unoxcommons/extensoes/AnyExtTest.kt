@@ -31,7 +31,7 @@ class AnyExtTest : StringSpec({
 		
 		("GG" preenchendoMatrizDeTamanho (2 por 2)).expandido() shouldBe Array(2) { arrayOf("GG", "GG") }.expandido()
 		
-		("GG" preenchendoLista2DDeTamanho (2 por 2)).expandido() shouldBe List(2) { listOf("GG", "GG") }.expandido()
+		("GG" preenchendoListaDeTamanho (2 por 2)).expandido() shouldBe List(2) { listOf("GG", "GG") }.expandido()
 	}
 	
 })
