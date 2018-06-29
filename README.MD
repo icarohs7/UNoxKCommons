@@ -4,17 +4,19 @@ Kotlin, buscando aumentar o grau de simplicidade da linguagem
 ao abstrair certas funções.
 
 # Sumário
-* [Dependências](#dependências)
+* [Instalação](#instalação)
   + [Gradle](#gradle)
   + [Maven](#maven)
-* [Aliases](#aliases)
-* [Extensões](#extensões)
-	+ [Listas](#listas)
-		- [Listas Bidimensionais](#listas-bidimensionais)
-	+ [Tipos Primitivos](#tipos-primitivos)
-	+ [Matrizes](#matrizes)
-	+ [Tipos Genéricos](#tipos-genéricos)
-## Dependências
+* [Funcionalidades](#funcionalidades)
+	* [Aliases](#aliases)
+	* [Extensões](#extensões)
+		+ [Listas](#listas)
+			- [Listas Bidimensionais](#listas-bidimensionais)
+		+ [Tipos Primitivos](#tipos-primitivos)
+		+ [Matrizes](#matrizes)
+		+ [Tipos Genéricos](#tipos-genéricos)
+	
+# Instalação
 
 #### Gradle
 
@@ -41,6 +43,8 @@ repositories {
 	</dependency>
 </dependencies>
 ```
+
+# Funcionalidades
 ## Aliases
 Apelidos utilizados para tipos
 
@@ -86,6 +90,12 @@ val transformada = lista2d transformadoRecursivamentePor {it * 2}   // listOf(li
 
 /* Executa a lambda passada em cada elemento, similar ao forEach, de forma profunda */
 lista2d.deepForEach { println(it) }
+
+/* Retorna a lista de células contidas na lista */
+val celulas = lista2d.cells()
+println(celulas[0].row) // 0
+println(celulas[0].col) // 0
+println(celulas[0].value)   // 1
 ```
 
 ### Tipos Primitivos
@@ -118,6 +128,12 @@ val m2 = m aplicandoRecursivamente {it / 2}
 
 /* Executa a lambda passada em cada elemento, similar ao forEach, de forma profunda */
 m.deepForEach { println(it) }
+
+/* Retorna a lista de células contidas na matriz */
+val celulas = m.cells()
+println(celulas[0].row) // 0
+println(celulas[0].col) // 0
+println(celulas[0].value)   // 1532
 ```
 
 ### Tipos Genéricos

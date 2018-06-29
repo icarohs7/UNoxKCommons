@@ -1,9 +1,20 @@
 package com.github.icarohs7.unoxkcommons.extensoes
 
+import com.github.icarohs7.unoxkcommons.tipos.NXCell
+
 /**
  * Expande uma lista bidimensional para uma lista unidimensional contendo todos os seus elementos
  */
 fun <T> List<List<T>>.expandido() = reduce { acc, linha -> acc + linha }
+
+/**
+ * Retorna a lista de células de uma lista bidimensional
+ */
+fun <T> List<List<T>>.cells(): List<NXCell<T>> {
+	return this.foldIndexed(kotlin.collections.emptyList()) { i, acc, row ->
+		acc + row.mapIndexed { j, value -> com.github.icarohs7.unoxkcommons.tipos.NXCell(i, j, value) }
+	}
+}
 
 /**
  * Aplica a função de transformação a todos os elementos da lista bidimensional
@@ -29,7 +40,7 @@ inline fun <T> List<List<T>>.deepForEach(transformacao: (T) -> Unit) {
 	}
 }
 
-inline fun <T> List<List<T>>.deepForEachIndexed(transformacao: (linha: Int, coluna: Int, elemento: T) -> Unit) {
+inline fun <T> List<List<T>>.deepForEachIndexed(transformacao: (linha: Int, coluna: Int, T) -> Unit) {
 	for (linha in 0 until this.size) {
 		for (coluna in 0 until this[0].size) {
 			transformacao(linha, coluna, this[linha][coluna])

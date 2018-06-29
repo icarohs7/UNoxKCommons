@@ -4,6 +4,7 @@ import com.github.icarohs7.unoxkcommons.estatico.Matriz
 import com.github.icarohs7.unoxkcommons.estatico.MatrizBoolean
 import com.github.icarohs7.unoxkcommons.estatico.MatrizDouble
 import com.github.icarohs7.unoxkcommons.estatico.MatrizInt
+import com.github.icarohs7.unoxkcommons.tipos.NXCell
 
 /**
  * Expande uma matriz para um array contendo todos os seus elementos
@@ -13,6 +14,25 @@ fun <T> Matriz<T>.expandido() = reduce { acc, linha -> acc + linha }
 fun MatrizBoolean.expandido() = reduce { acc, linha -> acc + linha }
 fun MatrizDouble.expandido() = reduce { acc, linha -> acc + linha }
 fun MatrizInt.expandido() = reduce { acc, linha -> acc + linha }
+
+/**
+ * Retorna a lista de células de uma matriz
+ */
+fun <T> Matriz<T>.cells(): List<NXCell<T>> {
+	return this.foldIndexed(emptyList()) { i, acc, row -> acc + row.mapIndexed { j, value -> NXCell(i, j, value) } }
+}
+
+fun MatrizBoolean.cells(): List<NXCell<Boolean>> {
+	return this.foldIndexed(emptyList()) { i, acc, row -> acc + row.mapIndexed { j, value -> NXCell(i, j, value) } }
+}
+
+fun MatrizDouble.cells(): List<NXCell<Double>> {
+	return this.foldIndexed(emptyList()) { i, acc, row -> acc + row.mapIndexed { j, value -> NXCell(i, j, value) } }
+}
+
+fun MatrizInt.cells(): List<NXCell<Int>> {
+	return this.foldIndexed(emptyList()) { i, acc, row -> acc + row.mapIndexed { j, value -> NXCell(i, j, value) } }
+}
 
 /**
  * Aplica uma função de transformação a cada elemento da matriz

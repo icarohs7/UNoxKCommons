@@ -1,5 +1,6 @@
 package com.github.icarohs7.unoxkcommons.extensoes
 
+import com.github.icarohs7.unoxkcommons.tipos.NXCell
 import io.kotlintest.inspectors.forAll
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
@@ -35,6 +36,20 @@ class ListExtTest : StringSpec() {
 			var c = 0
 			l.deepForEach { c++ }
 			c shouldBe l.size * l[0].size
+		}
+		
+		"Deve retornar sua lista de células" {
+			val cells = listOf(
+				listOf(1, 2, 3),
+				listOf(4, 5, 6),
+				listOf(7, 8, 9)).cells()
+			val expectedCells = listOf(
+				NXCell(0, 0, 1), NXCell(0, 1, 2), NXCell(0, 2, 3),
+				NXCell(1, 0, 4), NXCell(1, 1, 5), NXCell(1, 2, 6),
+				NXCell(2, 0, 7), NXCell(2, 1, 8), NXCell(2, 2, 9)
+			)
+			
+			cells shouldBe expectedCells
 		}
 	}
 }

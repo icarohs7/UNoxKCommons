@@ -1,5 +1,6 @@
 package com.github.icarohs7.unoxkcommons.extensoes
 
+import com.github.icarohs7.unoxkcommons.tipos.NXCell
 import io.kotlintest.inspectors.forAll
 import io.kotlintest.matchers.boolean.shouldBeTrue
 import io.kotlintest.shouldBe
@@ -59,6 +60,20 @@ class MatrizExtTest : StringSpec() {
 			var c = 0
 			m4.deepForEach { c++ }
 			c shouldBe m4.size * m4[0].size
+		}
+		
+		"Deve retornar sua lista de células" {
+			val cells = arrayOf(
+				intArrayOf(1, 2, 3),
+				intArrayOf(4, 5, 6),
+				intArrayOf(7, 8, 9)).cells()
+			val expectedCells = listOf(
+				NXCell(0, 0, 1), NXCell(0, 1, 2), NXCell(0, 2, 3),
+				NXCell(1, 0, 4), NXCell(1, 1, 5), NXCell(1, 2, 6),
+				NXCell(2, 0, 7), NXCell(2, 1, 8), NXCell(2, 2, 9)
+			)
+			
+			cells shouldBe expectedCells
 		}
 	}
 	
