@@ -53,13 +53,13 @@ Apelidos utilizados para tipos
 var m: Matriz<T>
 
 // Apelido para Array<IntArray>
-var m2: MatrizInteira
+var m2: IntMatriz
 
 // Apelido para Array<DoubleArray>
-var m3: MatrizDouble
+var m3: DoubleMatriz
 
 // Apelido para Array<BooleanArray>
-var m4: MatrizBooleana
+var m4: BooleanMatriz
 ```
 
 ## Extensões
@@ -80,9 +80,11 @@ Funções de extensão em listas bidimensionais
 ```kotlin
 val lista2d = listOf(listOf(1,2,3), listOf(4,5,6), listOf(7,8,9))
 
-/* A função expandido converte uma lista bidimensional em unidimensional
- * concatenando todas as linhas da lista em outra contendo os elementos */
-val unificada = lista2d.expandido() // listOf(1,2,3,4,5,6,7,8,9)
+/* Retorna a lista de células contidas na lista */
+val celulas = lista2d.cells
+println(celulas[0].row) // 0
+println(celulas[0].col) // 0
+println(celulas[0].value)   // 1
 
 /* A função transformadoRecursivamentePor aplica a lambda a cada subelemento
  * contido na lista bidimensional */
@@ -90,12 +92,6 @@ val transformada = lista2d transformadoRecursivamentePor {it * 2}   // listOf(li
 
 /* Executa a lambda passada em cada elemento, similar ao forEach, de forma profunda */
 lista2d.deepForEach { println(it) }
-
-/* Retorna a lista de células contidas na lista */
-val celulas = lista2d.cells()
-println(celulas[0].row) // 0
-println(celulas[0].col) // 0
-println(celulas[0].value)   // 1
 ```
 
 ### Tipos Primitivos

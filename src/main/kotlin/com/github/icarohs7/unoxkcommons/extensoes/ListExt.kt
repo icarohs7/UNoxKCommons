@@ -1,29 +1,62 @@
 package com.github.icarohs7.unoxkcommons.extensoes
 
+import com.github.icarohs7.unoxkcommons.estatico.Matriz
 import com.github.icarohs7.unoxkcommons.tipos.NXCell
 
 /**
- * Expande uma lista bidimensional para uma lista unidimensional contendo todos os seus elementos
+ * Propriedade de extensão contendo a lista de células da lista bidimensional
  */
-fun <T> List<List<T>>.expandido() = reduce { acc, linha -> acc + linha }
+val <T> List<List<T>>.cells: List<NXCell<T>>
+	get() = this.foldIndexed(emptyList()) { i, acc, row -> acc + row.mapIndexed { j, value -> NXCell(i, j, value) } }
 
 /**
- * Retorna a lista de células de uma lista bidimensional
+ * Aplica a função de transformação a todos os elementos da lista
  */
-fun <T> List<List<T>>.cells(): List<NXCell<T>> {
-	return this.foldIndexed(kotlin.collections.emptyList()) { i, acc, row ->
-		acc + row.mapIndexed { j, value -> com.github.icarohs7.unoxkcommons.tipos.NXCell(i, j, value) }
-	}
+inline infix fun <T, reified R> List<T>.transformadoPor(transformacao: (T) -> R): List<R> {
+	return map(transformacao)
+}
+
+/**
+ * Converte uma lista de células para uma matriz
+ */
+inline fun <reified T> List<NXCell<T>>.toMatriz(): Matriz<T?> {
+	val rowNumber = this.map { it.row }.reduce(::maxOf) + 1
+	val colNumber = this.map { it.col }.reduce(::maxOf) + 1
+	val matriz = Matriz<T?>(rowNumber) { Array(colNumber) { null } }
+	this.forEach { matriz[it.row][it.col] = it.value }
+	return matriz
+}
+
+inline fun <reified T> List<NXCell<T>>.toMatriz(fallback: T): Matriz<T> {
+	return this.toMatriz() transformadoRecursivamentePor { it ?: fallback }
+}
+
+/**
+ * Converte uma lista de células para uma lista bidimensional
+ */
+inline fun <reified T> List<NXCell<T>>.toList2D(): List<MutableList<T?>> {
+	val rowNumber = this.map { it.row }.reduce(::maxOf) + 1
+	val colNumber = this.map { it.col }.reduce(::maxOf) + 1
+	val lista = List<MutableList<T?>>(rowNumber) { MutableList(colNumber) { null } }
+	this.forEach { lista[it.row][it.col] = it.value }
+	return lista
+}
+
+inline fun <reified T> List<NXCell<T>>.toList2D(fallback: T): List<MutableList<T>> {
+	return this.toList2D() transformadoRecursivamentePor { it ?: fallback }
 }
 
 /**
  * Aplica a função de transformação a todos os elementos da lista bidimensional
  */
-inline infix fun <T, reified R> List<List<T>>.transformadoRecursivamentePor(transformacao: (T) -> R) = map { it.map(transformacao) }
+inline infix fun <T, reified R> List<List<T>>.transformadoRecursivamentePor(transformacao: (T) -> R): List<MutableList<R>> {
+	return map { it.map(transformacao).toMutableList() }
+}
 
-inline infix fun <T, reified R> List<List<T>>.transformadoRecursivamentePorIndexed(transformacao: (r: Int, c: Int, T) -> R): List<List<R>> {
+inline infix fun <T, reified R> List<List<T>>.transformadoRecursivamentePorIndexed(
+	transformacao: (row: Int, col: Int, T) -> R): List<MutableList<R>> {
 	return List(this.size) { i ->
-		List(this[0].size) { j ->
+		MutableList(this[0].size) { j ->
 			transformacao(i, j, this[i][j])
 		}
 	}
@@ -33,22 +66,17 @@ inline infix fun <T, reified R> List<List<T>>.transformadoRecursivamentePorIndex
  * Aplica a lambda a cada elemento contido na lista bidimensional
  */
 inline fun <T> List<List<T>>.deepForEach(transformacao: (T) -> Unit) {
-	for (linha in 0 until this.size) {
-		for (coluna in 0 until this[0].size) {
-			this[linha][coluna] processadoPor transformacao
+	for (row in 0 until this.size) {
+		for (col in 0 until this[0].size) {
+			this[row][col] processadoPor transformacao
 		}
 	}
 }
 
-inline fun <T> List<List<T>>.deepForEachIndexed(transformacao: (linha: Int, coluna: Int, T) -> Unit) {
-	for (linha in 0 until this.size) {
-		for (coluna in 0 until this[0].size) {
-			transformacao(linha, coluna, this[linha][coluna])
+inline fun <T> List<List<T>>.deepForEachIndexed(transformacao: (row: Int, col: Int, T) -> Unit) {
+	for (row in 0 until this.size) {
+		for (col in 0 until this[0].size) {
+			transformacao(row, col, this[row][col])
 		}
 	}
 }
-
-/**
- * Aplica a função de transformação a todos os elementos da lista
- */
-inline infix fun <T, reified R> List<T>.transformadoPor(transformacao: (T) -> R) = map(transformacao)

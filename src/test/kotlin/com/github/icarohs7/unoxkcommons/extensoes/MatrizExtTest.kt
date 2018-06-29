@@ -66,7 +66,7 @@ class MatrizExtTest : StringSpec() {
 			val cells = arrayOf(
 				intArrayOf(1, 2, 3),
 				intArrayOf(4, 5, 6),
-				intArrayOf(7, 8, 9)).cells()
+				intArrayOf(7, 8, 9)).cells
 			val expectedCells = listOf(
 				NXCell(0, 0, 1), NXCell(0, 1, 2), NXCell(0, 2, 3),
 				NXCell(1, 0, 4), NXCell(1, 1, 5), NXCell(1, 2, 6),

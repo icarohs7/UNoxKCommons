@@ -42,7 +42,7 @@ class ListExtTest : StringSpec() {
 			val cells = listOf(
 				listOf(1, 2, 3),
 				listOf(4, 5, 6),
-				listOf(7, 8, 9)).cells()
+				listOf(7, 8, 9)).cells
 			val expectedCells = listOf(
 				NXCell(0, 0, 1), NXCell(0, 1, 2), NXCell(0, 2, 3),
 				NXCell(1, 0, 4), NXCell(1, 1, 5), NXCell(1, 2, 6),
@@ -50,6 +50,28 @@ class ListExtTest : StringSpec() {
 			)
 			
 			cells shouldBe expectedCells
+		}
+		
+		"Deve converter uma lista de células em uma lista bidimensional" {
+			val l2d = listOf(
+				listOf(1, 2, 3),
+				listOf(4, 5, 6),
+				listOf(7, 8, 9)
+			)
+			val cells = l2d.cells
+			
+			cells.toList2D(0) shouldBe l2d
+		}
+		
+		"Deve converter uma lista de células em uma matriz" {
+			val matriz = arrayOf(
+				arrayOf(1, 2, 3),
+				arrayOf(4, 5, 6),
+				arrayOf(7, 8, 9)
+			)
+			val cells = matriz.cells
+			
+			cells.toMatriz(0).contentDeepEquals(matriz) shouldBe true
 		}
 	}
 }

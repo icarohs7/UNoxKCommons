@@ -23,15 +23,15 @@ class AnyExtTest : StringSpec({
 	}
 	
 	"Deve criar coleções bidimensionais de forma idiomática" {
-		(42 preenchendoMatrizIntDeTamanho (2 por 2)).expandido() shouldBe Array(2) { intArrayOf(42, 42) }.expandido()
+		(42 preenchendoMatrizIntDeTamanho (2 por 2)).cells shouldBe Array(2) { intArrayOf(42, 42) }.cells
 		
-		(2.0 preenchendoMatrizDoubleDeTamanho (2 por 2)).expandido() shouldBe Array(2) { doubleArrayOf(2.0, 2.0) }.expandido()
+		(2.0 preenchendoMatrizDoubleDeTamanho (2 por 2)).cells shouldBe Array(2) { doubleArrayOf(2.0, 2.0) }.cells
 		
-		(true preenchendoMatrizBooleanDeTamanho (2 por 2)).expandido() shouldBe Array(2) { booleanArrayOf(true, true) }.expandido()
+		(true preenchendoMatrizBooleanDeTamanho (2 por 2)).cells shouldBe Array(2) { booleanArrayOf(true, true) }.cells
 		
-		("GG" preenchendoMatrizDeTamanho (2 por 2)).expandido() shouldBe Array(2) { arrayOf("GG", "GG") }.expandido()
+		("GG" preenchendoMatrizDeTamanho (2 por 2)).cells shouldBe Array(2) { arrayOf("GG", "GG") }.cells
 		
-		("GG" preenchendoListaDeTamanho (2 por 2)).expandido() shouldBe List(2) { listOf("GG", "GG") }.expandido()
+		("GG" preenchendoListaDeTamanho (2 por 2)).cells shouldBe List(2) { listOf("GG", "GG") }.cells
 	}
 	
 })

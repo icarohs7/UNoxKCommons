@@ -2,8 +2,8 @@ package com.github.icarohs7.unoxkcommons.estatico
 
 typealias Matriz<T> = Array<Array<T>>
 
-typealias MatrizInt = Array<IntArray>
+typealias IntMatriz = Array<IntArray>
 
-typealias MatrizDouble = Array<DoubleArray>
+typealias DoubleMatriz = Array<DoubleArray>
 
-typealias MatrizBoolean = Array<BooleanArray>
+typealias BooleanMatriz = Array<BooleanArray>
