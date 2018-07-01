@@ -64,7 +64,8 @@ de extensão para criar e manipular esses conjuntos.<br>
 As funções funcionam para ambas listas bidimensionais e matrizes.
 
 #### Criação de coleções bidimensionais
-* Preenchendo coleções de forma uniforme
+* Preenchendo coleções de forma uniforme<br>
+**É possível passar somente um valor para tamanho quando a coleção tem dimensões iguais**
 ```kotlin
 val listaBidimensional = listBidimenOf(2 por 2) {3.1415} 
 val matriz = matrizOf(2 por 2) {1532} 
