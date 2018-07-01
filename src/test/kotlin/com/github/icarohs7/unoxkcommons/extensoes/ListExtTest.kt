@@ -7,17 +7,17 @@ import io.kotlintest.specs.StringSpec
 
 class ListExtTest : StringSpec() {
 	private val casos = listOf(
-		(10 preenchendoListaDeTamanho (2 por 2) transformadoRecursivamentePor { it * 10 }) para
-				(100 preenchendoListaDeTamanho (2 por 2)),
+		(10 preenchendoListaTamanho (2 por 2) deepMap { it * 10 }) para
+				(100 preenchendoListaTamanho (2 por 2)),
 		
-		(5.0 preenchendoListaDeTamanho (2 por 2) transformadoRecursivamentePor { it * 10 }) para
-				(50.0 preenchendoListaDeTamanho (2 por 2)),
+		(5.0 preenchendoListaTamanho (2 por 2) deepMap { it * 10 }) para
+				(50.0 preenchendoListaTamanho (2 por 2)),
 		
-		(true preenchendoListaDeTamanho (2 por 2) transformadoRecursivamentePor { !it }) para
-				(false preenchendoListaDeTamanho (2 por 2)),
+		(true preenchendoListaTamanho (2 por 2) deepMap { !it }) para
+				(false preenchendoListaTamanho (2 por 2)),
 		
-		("G" preenchendoListaDeTamanho (2 por 2) transformadoRecursivamentePor { "${it}G" }) para
-				("GG" preenchendoListaDeTamanho (2 por 2))
+		("G" preenchendoListaTamanho (2 por 2) deepMap { "${it}G" }) para
+				("GG" preenchendoListaTamanho (2 por 2))
 	)
 	
 	init {
@@ -30,7 +30,7 @@ class ListExtTest : StringSpec() {
 		}
 		
 		"Deve processar elementos de listas bidimensionais profundamente" {
-			val l = ("G-G" preenchendoListaDeTamanho (2 por 2)) transformadoRecursivamentePor { it.replace("-", "") }
+			val l = ("G-G" preenchendoListaTamanho (2 por 2)) deepMap { it.replace("-", "") }
 			l.deepForEachIndexed { linha, coluna, elemento -> elemento shouldBe l[linha][coluna] }
 			
 			var c = 0

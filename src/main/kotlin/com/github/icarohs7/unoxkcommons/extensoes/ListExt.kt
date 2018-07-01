@@ -13,7 +13,11 @@ val <T> List<List<T>>.cells: List<NXCell<T>>
  * Aplica a função de transformação a todos os elementos da lista
  */
 inline infix fun <T, reified R> List<T>.transformadoPor(transformacao: (T) -> R): List<R> {
-	return map(transformacao)
+	return this.map(transformacao)
+}
+
+inline infix fun <T, reified R> Array<T>.transformadoPor(transformacao: (T) -> R): Array<R> {
+	return this.map(transformacao).toTypedArray()
 }
 
 /**
@@ -28,7 +32,7 @@ inline fun <reified T> List<NXCell<T>>.toMatriz(): Matriz<T?> {
 }
 
 inline fun <reified T> List<NXCell<T>>.toMatriz(fallback: T): Matriz<T> {
-	return this.toMatriz() transformadoRecursivamentePor { it ?: fallback }
+	return this.toMatriz().deepMap { it ?: fallback }
 }
 
 /**
@@ -43,17 +47,17 @@ inline fun <reified T> List<NXCell<T>>.toList2D(): List<MutableList<T?>> {
 }
 
 inline fun <reified T> List<NXCell<T>>.toList2D(fallback: T): List<MutableList<T>> {
-	return this.toList2D() transformadoRecursivamentePor { it ?: fallback }
+	return this.toList2D().deepMap { it ?: fallback }
 }
 
 /**
  * Aplica a função de transformação a todos os elementos da lista bidimensional
  */
-inline infix fun <T, reified R> List<List<T>>.transformadoRecursivamentePor(transformacao: (T) -> R): List<MutableList<R>> {
-	return map { it.map(transformacao).toMutableList() }
+inline infix fun <T, reified R> List<List<T>>.deepMap(transformacao: (T) -> R): List<MutableList<R>> {
+	return this.map { it.map(transformacao).toMutableList() }
 }
 
-inline infix fun <T, reified R> List<List<T>>.transformadoRecursivamentePorIndexed(
+inline infix fun <T, reified R> List<List<T>>.deepMapIndexed(
 	transformacao: (row: Int, col: Int, T) -> R): List<MutableList<R>> {
 	return List(this.size) { i ->
 		MutableList(this[0].size) { j ->
@@ -65,15 +69,15 @@ inline infix fun <T, reified R> List<List<T>>.transformadoRecursivamentePorIndex
 /**
  * Aplica a lambda a cada elemento contido na lista bidimensional
  */
-inline fun <T> List<List<T>>.deepForEach(transformacao: (T) -> Unit) {
+inline infix fun <T> List<List<T>>.deepForEach(transformacao: (T) -> Unit) {
 	for (row in 0 until this.size) {
 		for (col in 0 until this[0].size) {
-			this[row][col] processadoPor transformacao
+			transformacao(this[row][col])
 		}
 	}
 }
 
-inline fun <T> List<List<T>>.deepForEachIndexed(transformacao: (row: Int, col: Int, T) -> Unit) {
+inline infix fun <T> List<List<T>>.deepForEachIndexed(transformacao: (row: Int, col: Int, T) -> Unit) {
 	for (row in 0 until this.size) {
 		for (col in 0 until this[0].size) {
 			transformacao(row, col, this[row][col])
