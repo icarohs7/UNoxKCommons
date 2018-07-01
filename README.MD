@@ -68,7 +68,7 @@ de extensão para criar e manipular esses conjuntos.<br>
 As funções são exemplificadas utilizando uma lista bidimensionals,<br>
 porém funcionam também utilizando matrizes.
 
-* Cria uma matriz ou lista bidimensional preenchida com o elemento desejado atravez da sintaxe:
+* Cria uma matriz ou lista bidimensional preenchida com o elemento desejado atravez da sintaxe:<br>
 **valor** preenchendo**tipo**Tamanho **tamanhoDoConjunto**
 ```kotlin
 val array = "Hello, World!" preenchendoArrayTamanho 10
@@ -108,5 +108,6 @@ val p2 = 5 para 5
 
 * A função `processadoPor` aplica a lambda au elemento utilizado
 ```kotlin
-val number = 1532 processadoPor {it - 1532} processadoPor ::println //subtrai 1532 do valor, em seguida o imprime
+//subtrai 1532 do valor, em seguida o imprime
+val number = 1532 processadoPor {it - 1532} processadoPor ::println 
 ```
