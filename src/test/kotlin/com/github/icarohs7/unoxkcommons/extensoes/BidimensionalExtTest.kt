@@ -1,12 +1,14 @@
 package com.github.icarohs7.unoxkcommons.extensoes
 
+import com.github.icarohs7.unoxkcommons.funcoes.listBidimenOf
+import com.github.icarohs7.unoxkcommons.funcoes.matrizOf
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 class BidimensionalExtTest : StringSpec() {
-	private val matriz = 2 preenchendoMatrizTamanho (2 por 3)
+	private val matriz = matrizOf(2 por 3) { 2 }
 	private val matrizEsperada = arrayOf(arrayOf(2, 2, 2), arrayOf(2, 2, 2))
-	private val lista = 2 preenchendoListaTamanho (2 por 3)
+	private val lista = listBidimenOf(2 por 3) { 2 }
 	private val listaEsperada = listOf(listOf(2, 2, 2), listOf(2, 2, 2))
 	
 	init {

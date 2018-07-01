@@ -1,11 +1,13 @@
 package com.github.icarohs7.unoxkcommons.extensoes
 
+import com.github.icarohs7.unoxkcommons.estatico.ListBidimen
+import com.github.icarohs7.unoxkcommons.estatico.ListSB
 import com.github.icarohs7.unoxkcommons.estatico.Matriz
 
 /**
  * Transforma os elementos da lista bidimensional
  */
-inline infix fun <T, reified R> List<List<T>>.deepMap(transformacao: (T) -> R): List<MutableList<R>> {
+inline infix fun <T, reified R> ListSB<T>.deepMap(transformacao: (T) -> R): ListBidimen<R> {
 	return this.map { it.map(transformacao).toMutableList() }
 }
 
@@ -23,8 +25,7 @@ inline infix fun <T, reified R> Matriz<T>.deepMap(transformacao: (T) -> R): Matr
 /**
  * Transforma os elementos da lista bidimensional com índice
  */
-inline infix fun <T, reified R> List<List<T>>.deepMapIndexed(
-	transformacao: (row: Int, col: Int, T) -> R): List<MutableList<R>> {
+inline infix fun <T, reified R> ListSB<T>.deepMapIndexed(transformacao: (row: Int, col: Int, T) -> R): ListBidimen<R> {
 	return List(this.size) { i ->
 		MutableList(this[0].size) { j ->
 			transformacao(i, j, this[i][j])
@@ -46,7 +47,7 @@ inline infix fun <T, reified R> Matriz<T>.deepMapIndexed(transformacao: (row: In
 /**
  * Processa os elementos da lista bidimensional sem modificá-los
  */
-inline infix fun <T> List<List<T>>.deepForEach(transformacao: (T) -> Unit) {
+inline infix fun <T> ListSB<T>.deepForEach(transformacao: (T) -> Unit) {
 	for (row in 0 until this.size) {
 		for (col in 0 until this[0].size) {
 			transformacao(this[row][col])
@@ -68,7 +69,7 @@ inline infix fun <T> Matriz<T>.deepForEach(transformacao: (T) -> Unit) {
 /**
  * Processa os elementos da lista bidimensional sem modificá-los com índice
  */
-inline infix fun <T> List<List<T>>.deepForEachIndexed(transformacao: (row: Int, col: Int, T) -> Unit) {
+inline infix fun <T> ListSB<T>.deepForEachIndexed(transformacao: (row: Int, col: Int, T) -> Unit) {
 	for (row in 0 until this.size) {
 		for (col in 0 until this[0].size) {
 			transformacao(row, col, this[row][col])
@@ -90,7 +91,7 @@ inline infix fun <T> Matriz<T>.deepForEachIndexed(transformacao: (row: Int, col:
 /**
  * Verifica se um elemento pertence a uma matriz
  */
-fun <T> List<List<T>>.deepContains(element: T): Boolean {
+fun <T> ListSB<T>.deepContains(element: T): Boolean {
 	return this.fold(false) { acc, row -> acc || row.contains(element) }
 }
 
