@@ -3,35 +3,27 @@ package com.github.icarohs7.unoxkcommons.extensoes
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
-class AnyExtTest : StringSpec({
-	"Deve processar diferentes entradas para diferentes saídas" {
-		(5 processadoPor { it * it }) shouldBe 25
-		
-		(25 processadoPor ::listOf) shouldBe listOf(25)
-	}
+class AnyExtTest : StringSpec() {
+	val case1 = 5 preenchendoListaTamanho 2
+	val case2 = 5 preenchendoArrayTamanho 2
+	val case3 = 10 preenchendoListaTamanho (2 por 3)
+	val case4 = 10 preenchendoMatrizTamanho (2 por 3)
 	
-	"Deve criar coleções unidimensionais" {
-		(42 preenchendoArrayTamanho 2) shouldBe arrayOf(42, 42)
+	init {
+		"Deve processar valores" {
+			5 processadoPor { it * it } shouldBe 25
+			25 processadoPor ::listOf shouldBe listOf(25)
+			"KEK" processadoPor String::length shouldBe 3
+		}
 		
-		(2.0 preenchendoArrayTamanho 2) shouldBe arrayOf(2.0, 2.0)
+		"Deve criar coleções unidimensionais" {
+			case1 shouldBe listOf(5, 5)
+			case2 shouldBe arrayOf(5, 5)
+		}
 		
-		(true preenchendoArrayTamanho 2) shouldBe arrayOf(true, true)
-		
-		("GG" preenchendoArrayTamanho 2) shouldBe arrayOf("GG", "GG")
-		
-		("GG" preenchendoListaTamanho 2) shouldBe listOf("GG", "GG")
+		"Deve criar coleções bidimensionais" {
+			case3 shouldBe listOf(listOf(10, 10, 10), listOf(10, 10, 10))
+			case4.cells shouldBe arrayOf(arrayOf(10, 10, 10), arrayOf(10, 10, 10)).cells
+		}
 	}
-	
-	"Deve criar coleções bidimensionais" {
-		(42 preenchendoMatrizTamanho (2 por 2)).cells shouldBe Array(2) { arrayOf(42, 42) }.cells
-		
-		(2.0 preenchendoMatrizTamanho (2 por 2)).cells shouldBe Array(2) { arrayOf(2.0, 2.0) }.cells
-		
-		(true preenchendoMatrizTamanho (2 por 2)).cells shouldBe Array(2) { arrayOf(true, true) }.cells
-		
-		("GG" preenchendoMatrizTamanho (2 por 2)).cells shouldBe Array(2) { arrayOf("GG", "GG") }.cells
-		
-		("GG" preenchendoListaTamanho (2 por 2)).cells shouldBe List(2) { listOf("GG", "GG") }.cells
-	}
-	
-})
+}
