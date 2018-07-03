@@ -112,6 +112,21 @@ matriz.deepContains(3)  // false
 matriz.deepContains(13) // false
 ``` 
 
+* A função `deepCopy` cria uma nova instância da coleção contendo os mesmos elementos da coleção copiada
+```kotlin
+val matriz = arrayOf(arrayOf(1,2),arrayOf(3,4))
+val novaMatriz = matriz.deepCopy()
+val identicas = (matriz === novaMatriz) // false -> referências diferentes
+val iguais = (matriz.cells == novaMatriz.cells) // true -> conteúdos iguais
+```
+
+* A função `deepReplace` retorna uma nova coleção onde todos os elementos desejados são substituidos por outros
+```kotlin
+val listaAntiga = listOf(listOf(1,2),listOf(2,3))
+val listaNova = listaAntiga.deepReplace(2,42) // Substitui todas as ocorrências do valor 2 pelo valor 42
+println(listaNova) // listOf(listOf(1,42),listOf(42,3))
+```
+
 ## Extensões para Tipos Genéricos
 Funções de extensão podendo ser utilizadas a partir de qualquer objeto
 

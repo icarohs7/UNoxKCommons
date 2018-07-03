@@ -56,5 +56,37 @@ class BidimensionalExtTest : StringSpec() {
 			listaModificada.deepContains(15) shouldBe false
 			listaModificada.deepContains(5) shouldBe false
 		}
+		
+		"Deve copiar uma lista bidimensional" {
+			val listaOriginal = listBidimenOf(5) { (it.row * 10) + it.col }
+			val listaCopia = listaOriginal.deepCopy()
+			listaOriginal.forEachIndexed { index, _ ->
+				listaCopia[index] shouldBe listaOriginal[index]
+				(listaCopia[index] === listaOriginal[index]) shouldBe false
+			}
+			(listaOriginal === listaCopia) shouldBe false
+		}
+		
+		"Deve copiar uma matriz" {
+			val matrizOriginal = matrizOf(5) { (it.row * 10) + it.col }
+			val matrizCopia = matrizOriginal.deepCopy()
+			matrizOriginal.forEachIndexed { index, _ ->
+				matrizCopia[index] shouldBe matrizOriginal[index]
+				(matrizCopia[index] === matrizOriginal[index]) shouldBe false
+			}
+			(matrizOriginal === matrizCopia) shouldBe false
+		}
+		
+		"Deve substituir elementos em uma lista bidimensional" {
+			val listaAntiga = listOf(listOf(1, 2), listOf(2, 3))
+			val listaNova = listaAntiga.deepReplace(2, 1532)
+			listaNova shouldBe listOf(listOf(1, 1532), listOf(1532, 3))
+		}
+		
+		"Deve substituir elementos em uma matriz" {
+			val matrizAntiga = arrayOf(arrayOf(1, 2), arrayOf(2, 3))
+			val matrizNova = matrizAntiga.deepReplace(2, 1532)
+			matrizNova.cells shouldBe arrayOf(arrayOf(1, 1532), arrayOf(1532, 3)).cells
+		}
 	}
 }

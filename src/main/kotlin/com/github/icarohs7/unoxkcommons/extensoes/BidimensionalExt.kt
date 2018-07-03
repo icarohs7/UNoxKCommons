@@ -3,6 +3,8 @@ package com.github.icarohs7.unoxkcommons.extensoes
 import com.github.icarohs7.unoxkcommons.estatico.ListBidimen
 import com.github.icarohs7.unoxkcommons.estatico.ListSB
 import com.github.icarohs7.unoxkcommons.estatico.Matriz
+import com.github.icarohs7.unoxkcommons.funcoes.listBidimenOf
+import com.github.icarohs7.unoxkcommons.funcoes.matrizOf
 
 /**
  * Transforma os elementos da lista bidimensional
@@ -100,4 +102,32 @@ fun <T> ListSB<T>.deepContains(element: T): Boolean {
  */
 fun <T> Matriz<T>.deepContains(element: T): Boolean {
 	return this.fold(false) { acc, row -> acc || row.contains(element) }
+}
+
+/**
+ * Realiza a cópia de uma lista bidimensional
+ */
+inline fun <reified T> ListSB<T>.deepCopy(): ListBidimen<T> {
+	return listBidimenOf(this.size por this[0].size) { this[it.row][it.col] }
+}
+
+/**
+ * Realiza a cópia de uma matriz
+ */
+inline fun <reified T> Matriz<T>.deepCopy(): Matriz<T> {
+	return matrizOf(this.size por this[0].size) { this[it.row][it.col] }
+}
+
+/**
+ * Substitui um elemento por outro na lista bidimensional e retorna a lista modificada
+ */
+inline fun <reified T> ListSB<T>.deepReplace(old: T, new: T): ListBidimen<T> {
+	return this deepMap { if (it == old) new else it }
+}
+
+/**
+ * Substitui um elemento por outro na matriz e retorna a matriz modificada
+ */
+inline fun <reified T> Matriz<T>.deepReplace(old: T, new: T): Matriz<T> {
+	return this deepMap { if (it == old) new else it }
 }
