@@ -1,100 +1,64 @@
 package com.github.icarohs7.unoxkcommons.extensoes
 
-import com.github.icarohs7.unoxkcommons.funcoes.listBidimenOf
-import com.github.icarohs7.unoxkcommons.funcoes.matrizOf
+import com.github.icarohs7.unoxkcommons.builders.umaListaBidimensional
+import com.github.icarohs7.unoxkcommons.builders.umaMatriz
+import com.github.icarohs7.unoxkcommons.estatico.ListBidimen
+import com.github.icarohs7.unoxkcommons.estatico.Matriz
+import io.kotlintest.Description
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.StringSpec
 
 class BidimensionalExtTest : StringSpec() {
-	private val matriz = matrizOf(2 por 3) { 2 }
-	private val matrizEsperada = arrayOf(arrayOf(2, 2, 2), arrayOf(2, 2, 2))
-	private val lista = listBidimenOf(2 por 3) { 2 }
-	private val listaEsperada = listOf(listOf(2, 2, 2), listOf(2, 2, 2))
+	lateinit var m: Matriz<Int>
+	lateinit var l: ListBidimen<Int>
+	
+	override fun beforeTest(description: Description) {
+		m = umaMatriz().agora()
+		l = umaListaBidimensional().agora()
+	}
 	
 	init {
-		"Deve iterar sobre os elementos de uma matriz" {
-			matriz deepForEachIndexed { row, col, valor -> valor shouldBe matrizEsperada[row][col] }
-			matriz deepForEachIndexed { row, col, valor -> valor shouldBe matriz[row][col] }
-			
-			var c = 0
-			matriz deepForEach { c++ }
-			c shouldBe matriz.size * matriz[0].size
+		"Deve iterar sobre seus elementos" {
+			m deepForEachIndexed { row, col, valor -> valor shouldBe m[row][col] }
+			l deepForEachIndexed { row, col, valor -> valor shouldBe l[row][col] }
 		}
 		
-		"Deve iterar sobre os elementos de uma lista bidimensional" {
-			lista deepForEachIndexed { row, col, valor -> valor shouldBe listaEsperada[row][col] }
-			lista deepForEachIndexed { row, col, valor -> valor shouldBe lista[row][col] }
-			
-			var c = 0
-			lista deepForEach { c++ }
-			c shouldBe lista.size * lista[0].size
+		"Deve se transformar" {
+			m.deepMap { it * 2 }.cells shouldBe arrayOf(arrayOf(2, 4), arrayOf(6, 8)).cells
+			l.deepMap { it * 2 } shouldBe listOf(listOf(2, 4), listOf(6, 8))
 		}
 		
-		"Deve transformar uma matriz" {
-			(matriz deepMap { it * 10 }).cells shouldBe arrayOf(arrayOf(20, 20, 20), arrayOf(20, 20, 20)).cells
-			(matriz deepMapIndexed { row, col, valor -> (row * 10) + col + valor }).cells shouldBe
-					arrayOf(arrayOf(2, 3, 4), arrayOf(12, 13, 14)).cells
+		"Deve verificar se possui um elemento" {
+			m.deepContains(4) shouldBe true
+			m.deepContains(5) shouldBe false
+			l.deepContains(4) shouldBe true
+			l.deepContains(5) shouldBe false
 		}
 		
-		"Deve transformar uma lista bidimensional" {
-			lista deepMap { it * 10 } shouldBe listOf(listOf(20, 20, 20), listOf(20, 20, 20))
-			lista deepMapIndexed { row, col, valor -> (row * 10) + col + valor } shouldBe listOf(listOf(2, 3, 4), listOf(12, 13, 14))
+		"Deve gerar uma cópia de si" {
+			(m === umaMatriz().agora()) shouldBe false
+			m.cells shouldBe umaMatriz().agora().cells
+			(l === umaListaBidimensional().agora()) shouldBe false
+			l shouldBe umaListaBidimensional().agora()
 		}
 		
-		"Deve verificar se um elemento está contido em uma matriz" {
-			val matrizModificada = matriz deepMapIndexed { row, col, valor -> (row * 10) + col + valor }
-			matrizModificada.deepContains(12) shouldBe true
-			matrizModificada.deepContains(13) shouldBe true
-			matrizModificada.deepContains(15) shouldBe false
-			matrizModificada.deepContains(5) shouldBe false
+		"Deve substituir seus elementos" {
+			(m deepReplace (2 to 3)).cells shouldBe arrayOf(arrayOf(1, 3), arrayOf(3, 4)).cells
+			(m deepReplace (2 to 3)).cells shouldBe m.deepReplace(2, 3).cells
+			l deepReplace (2 to 3) shouldBe listOf(listOf(1, 3), listOf(3, 4))
+			l deepReplace (2 to 3) shouldBe l.deepReplace(2, 3)
 		}
 		
-		"Deve verificar se um elemento está contido em uma lista bidimensional" {
-			val listaModificada = lista deepMapIndexed { row, col, valor -> (row * 10) + col + valor }
-			listaModificada.deepContains(12) shouldBe true
-			listaModificada.deepContains(13) shouldBe true
-			listaModificada.deepContains(15) shouldBe false
-			listaModificada.deepContains(5) shouldBe false
+		"Deve se transformar em String" {
+			l.deepToString() shouldBe "1, 2\n3, 4"
+			m.deepToString() shouldBe "1, 2\n3, 4"
 		}
 		
-		"Deve copiar uma lista bidimensional" {
-			val listaOriginal = listBidimenOf(5) { (it.row * 10) + it.col }
-			val listaCopia = listaOriginal.deepCopy()
-			listaOriginal.forEachIndexed { index, _ ->
-				listaCopia[index] shouldBe listaOriginal[index]
-				(listaCopia[index] === listaOriginal[index]) shouldBe false
-			}
-			(listaOriginal === listaCopia) shouldBe false
-		}
-		
-		"Deve copiar uma matriz" {
-			val matrizOriginal = matrizOf(5) { (it.row * 10) + it.col }
-			val matrizCopia = matrizOriginal.deepCopy()
-			matrizOriginal.forEachIndexed { index, _ ->
-				matrizCopia[index] shouldBe matrizOriginal[index]
-				(matrizCopia[index] === matrizOriginal[index]) shouldBe false
-			}
-			(matrizOriginal === matrizCopia) shouldBe false
-		}
-		
-		"Deve substituir elementos de um conjunto bidimensional" {
-			val matrizAntiga = arrayOf(arrayOf(1, 2), arrayOf(2, 3))
-			val matrizNova = matrizAntiga.deepReplace(2, 1532)
-			
-			val listaAntiga = listOf(listOf(1, 2), listOf(2, 3))
-			val listaNova = listaAntiga.deepReplace(2, 1532)
-			
-			listaNova shouldBe listOf(listOf(1, 1532), listOf(1532, 3))
-			matrizNova.cells shouldBe listaNova.cells
-		}
-		
-		"Deve converter um conjunto bidimensional para string" {
-			val lista = listBidimenOf(2) { (it.row * 2) + it.col }
-			val matriz = matrizOf(2) { (it.row * 2) + it.col }
-			
-			val listaString = lista.deepToString()
-			listaString shouldBe "0, 1\n2, 3"
-			matriz.deepToString() shouldBe listaString
+		"Deve preencher suas células com um valor" {
+			m deepFill 10
+			l deepFill 10
+			m.cells shouldBe arrayOf(arrayOf(10, 10), arrayOf(10, 10)).cells
+			l shouldBe listOf(listOf(10, 10), listOf(10, 10))
 		}
 	}
 }

@@ -137,6 +137,16 @@ val matriz = matrizOf(2) { (it.row*2) + it.col }
 println(matriz.deepToString)
 ```
 
+* A função `deepFill` preenche todas as posições da coleção bidimensional com o valor passado
+```kotlin
+val matriz = matrizOf(2) { (it.row*2) + it.col }
+matriz.deepFill(5) // Ou m deepFill 5
+
+// 5, 5
+// 5, 5
+println(matriz.deepToString)
+```
+
 ## Extensões para Tipos Genéricos
 Funções de extensão podendo ser utilizadas a partir de qualquer objeto
 

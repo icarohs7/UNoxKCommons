@@ -126,10 +126,24 @@ inline fun <reified T> ListSB<T>.deepReplace(old: T, new: T): ListBidimen<T> {
 }
 
 /**
+ * Versão infixa da função deepReplace, aceitando um par
+ */
+inline infix fun <reified T> ListSB<T>.deepReplace(oldAndNew: Pair<T, T>): ListBidimen<T> {
+	return this.deepReplace(oldAndNew.first, oldAndNew.second)
+}
+
+/**
  * Substitui um elemento por outro na matriz e retorna a matriz modificada
  */
 inline fun <reified T> Matriz<T>.deepReplace(old: T, new: T): Matriz<T> {
 	return this deepMap { if (it == old) new else it }
+}
+
+/**
+ * Versão infixa da função deepReplace, aceitando um par
+ */
+inline infix fun <reified T> Matriz<T>.deepReplace(oldAndNew: Pair<T, T>): Matriz<T> {
+	return this.deepReplace(oldAndNew.first, oldAndNew.second)
 }
 
 /**
@@ -154,4 +168,18 @@ fun <T> Matriz<T>.deepToString(): String {
 		sb.append("$rowString\n")
 	}
 	return sb.toString().dropLast(1)
+}
+
+/**
+ * Preenche todas as posições da lista bidimensional com o valor parametrizado
+ */
+infix fun <T> ListBidimen<T>.deepFill(value: T) {
+	this.deepForEachIndexed { row, col, _ -> this[row][col] = value }
+}
+
+/**
+ * Preenche todas as posições da matriz com o valor parametrizado
+ */
+infix fun <T> Matriz<T>.deepFill(value: T) {
+	this.deepForEachIndexed { row, col, _ -> this[row][col] = value }
 }
