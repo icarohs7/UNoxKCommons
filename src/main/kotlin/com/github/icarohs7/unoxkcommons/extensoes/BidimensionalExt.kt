@@ -131,3 +131,27 @@ inline fun <reified T> ListSB<T>.deepReplace(old: T, new: T): ListBidimen<T> {
 inline fun <reified T> Matriz<T>.deepReplace(old: T, new: T): Matriz<T> {
 	return this deepMap { if (it == old) new else it }
 }
+
+/**
+ * Retorna a representação da lista bidimensional na forma de string
+ */
+fun <T> ListSB<T>.deepToString(): String {
+	val sb = StringBuilder()
+	this.forEach { row ->
+		val rowString = buildString { row.forEach { append("$it, ") } }.dropLast(2)
+		sb.append("$rowString\n")
+	}
+	return sb.toString().dropLast(1)
+}
+
+/**
+ * Retorna a representação da matriz na forma de string
+ */
+fun <T> Matriz<T>.deepToString(): String {
+	val sb = StringBuilder()
+	this.forEach { row ->
+		val rowString = buildString { row.forEach { append("$it, ") } }.dropLast(2)
+		sb.append("$rowString\n")
+	}
+	return sb.toString().dropLast(1)
+}

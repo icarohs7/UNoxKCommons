@@ -127,6 +127,16 @@ val listaNova = listaAntiga.deepReplace(2,42) // Substitui todas as ocorrências
 println(listaNova) // listOf(listOf(1,42),listOf(42,3))
 ```
 
+* A função `deepToString` retorna a representação em String da coleção bidimensional
+```kotlin
+val matriz = matrizOf(2) { (it.row*2) + it.col }
+
+// Será impresso:
+// 0, 1
+// 2, 3
+println(matriz.deepToString)
+```
+
 ## Extensões para Tipos Genéricos
 Funções de extensão podendo ser utilizadas a partir de qualquer objeto
 

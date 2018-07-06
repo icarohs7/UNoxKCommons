@@ -77,16 +77,24 @@ class BidimensionalExtTest : StringSpec() {
 			(matrizOriginal === matrizCopia) shouldBe false
 		}
 		
-		"Deve substituir elementos em uma lista bidimensional" {
-			val listaAntiga = listOf(listOf(1, 2), listOf(2, 3))
-			val listaNova = listaAntiga.deepReplace(2, 1532)
-			listaNova shouldBe listOf(listOf(1, 1532), listOf(1532, 3))
-		}
-		
-		"Deve substituir elementos em uma matriz" {
+		"Deve substituir elementos de um conjunto bidimensional" {
 			val matrizAntiga = arrayOf(arrayOf(1, 2), arrayOf(2, 3))
 			val matrizNova = matrizAntiga.deepReplace(2, 1532)
-			matrizNova.cells shouldBe arrayOf(arrayOf(1, 1532), arrayOf(1532, 3)).cells
+			
+			val listaAntiga = listOf(listOf(1, 2), listOf(2, 3))
+			val listaNova = listaAntiga.deepReplace(2, 1532)
+			
+			listaNova shouldBe listOf(listOf(1, 1532), listOf(1532, 3))
+			matrizNova.cells shouldBe listaNova.cells
+		}
+		
+		"Deve converter um conjunto bidimensional para string" {
+			val lista = listBidimenOf(2) { (it.row * 2) + it.col }
+			val matriz = matrizOf(2) { (it.row * 2) + it.col }
+			
+			val listaString = lista.deepToString()
+			listaString shouldBe "0, 1\n2, 3"
+			matriz.deepToString() shouldBe listaString
 		}
 	}
 }
