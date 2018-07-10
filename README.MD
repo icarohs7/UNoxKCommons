@@ -1,9 +1,11 @@
 # <img src ="https://upload.wikimedia.org/wikipedia/commons/b/b5/Kotlin-logo.png" width=24> UNoxKCommons
 [![GitHub version](https://badge.fury.io/gh/icarohs7%2FUNoxKCommons.svg)](https://github.com/icarohs7/UNoxKCommons/releases)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.icarohs7/unoxkcommons/badge.svg?style=flat-square)](https://mvnrepository.com/artifact/com.github.icarohs7/unoxkcommons)
-[![GitHub license](https://img.shields.io/github/license/icarohs7/UNoxKCommons.svg)](https://github.com/icarohs7/UNoxKCommons/blob/master/LICENSE.md)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.icarohs7/unoxkcommons/badge.svg)](https://mvnrepository.com/artifact/com.github.icarohs7/unoxkcommons)
+[![GitHub license](https://img.shields.io/github/license/icarohs7/UNoxKCommons.svg)](https://github.com/icarohs7/UNoxKCommons/blob/master/LICENSE)
 
-### Biblioteca de componentes e extensões para a linguagem Kotlin, buscando aumentar o grau de simplicidade da linguagem ao abstrair certas funções, em especial no tratamento de coleções bidimensionais.
+## Descrição
+Biblioteca de componentes e extensões para a linguagem Kotlin, buscando aumentar o grau de simplicidade da linguagem<br>
+ao abstrair certas funções, em especial no tratamento de coleções bidimensionais.
 
 # Sumário
 * [Instalação](#instalação)
